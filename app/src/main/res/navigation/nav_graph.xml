@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.juanfra.appcontactos.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:name="com.juanfra.appcontactos.iu.fragments.FirstFragment"
+        android:label="Lista de contactos"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -17,8 +17,8 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.juanfra.appcontactos.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:name="com.juanfra.appcontactos.iu.fragments.SecondFragment"
+        android:label="Contacto"
         tools:layout="@layout/fragment_second">
 
         <action
