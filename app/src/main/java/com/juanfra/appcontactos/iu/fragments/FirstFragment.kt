@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
-import androidx.compose.ui.unit.Dp
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,6 +65,25 @@ class FirstFragment : Fragment() {
         }
         closeMenu()
 
+        val listenah = object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+
+        }
+
+        binding.svContacts.setOnQueryTextListener(listenah)
+
+
+    }
+
+    fun addRandom(count: Int){
 
     }
 

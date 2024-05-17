@@ -1,12 +1,14 @@
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.juanfra.appcontactos.data.model.Contacto
 import com.juanfra.appcontactos.databinding.HolderContactoBinding
 import com.juanfra.appcontactos.iu.adapters.ClickListener
 
 class AdaptadorContactos(var listado: List<Contacto>, val listener: ClickListener) :
-    RecyclerView.Adapter<AdaptadorContactos.MiCelda>() {
+    RecyclerView.Adapter<AdaptadorContactos.MiCelda>(), Filterable {
 
         var listaCopia = ArrayList<Contacto>()
     //Your holder here
@@ -39,7 +41,35 @@ class AdaptadorContactos(var listado: List<Contacto>, val listener: ClickListene
 
     fun actualizarContactos(contactos: List<Contacto>){
         listado = contactos
+        listaCopia.clear()
+        listaCopia.addAll(contactos)
         notifyDataSetChanged()
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val resultados = ArrayList<Contacto>()
+                val busqueda = constraint.toString().lowercase().trim()
+                listaCopia.forEach{
+                    if(it.nombre.lowercase().contains(busqueda) || it.apellidos.lowercase().contains(busqueda)){
+                        resultados.add(it)
+                    }
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = resultados
+                return filterResults
+
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                val resultados = results?.values as List<Contacto>
+                this@AdaptadorContactos.listado = resultados
+                notifyDataSetChanged()
+            }
+
+        }
     }
 
 
